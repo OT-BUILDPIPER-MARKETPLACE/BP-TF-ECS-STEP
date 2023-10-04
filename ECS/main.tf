@@ -1,3 +1,8 @@
+locals {
+   services_subnet_ids = var.services_subnet_ids 
+   alb_subnets = var.alb_subnets
+}
+
 module "ecs" {
   source = "terraform-aws-modules/ecs/aws"
 
@@ -29,7 +34,7 @@ module "ecs" {
           memory_reservation = var.backend_memory_reservation
         }
       }
-      subnet_ids = var.services_subnet_ids
+      subnet_ids = local.services_subnet_ids
       load_balancer = {
         frontend = {
           target_group_arn = element(module.alb.target_group_arns, 0)
@@ -78,7 +83,7 @@ module "ecs" {
           memory_reservation = var.webapp_memory_reservation
         }
       }
-      subnet_ids = var.services_subnet_ids
+      subnet_ids = local.services_subnet_ids
       load_balancer = {
         frontend = {
           target_group_arn = element(module.alb.target_group_arns, 1)
@@ -127,7 +132,7 @@ module "ecs" {
           memory_reservation = var.admin_memory_reservation
         }
       }
-      subnet_ids = var.services_subnet_ids
+      subnet_ids = local.services_subnet_ids
       load_balancer = {
         frontend = {
           target_group_arn = element(module.alb.target_group_arns, 2)
@@ -176,7 +181,7 @@ module "ecs" {
           memory_reservation = var.foomill_memory_reservation
         }
       }
-      subnet_ids = var.services_subnet_ids
+      subnet_ids = local.services_subnet_ids
       load_balancer = {
         frontend = {
           target_group_arn = element(module.alb.target_group_arns, 3)
@@ -206,7 +211,7 @@ module "ecs" {
 }
 
 data "aws_subnet" "this" {
-  id = element(var.alb_subnets, 0)
+  id = element(local.alb_subnets, 0)
 }
 
 module "alb_sg" {
@@ -234,7 +239,7 @@ module "alb" {
   load_balancer_type = "application"
 
   vpc_id          = data.aws_subnet.this.vpc_id
-  subnets         = var.alb_subnets
+  subnets         = local.alb_subnets
   security_groups = [module.alb_sg.security_group_id]
 
   http_tcp_listeners = [
