@@ -270,7 +270,17 @@ module "alb" {
         type         = "forward"
         target_group_index = 1
       }]
-
+      health_check = {
+        enabled             = true
+        interval            = 60
+        path                = "/"
+        port                = "traffic-port"
+        healthy_threshold   = 2
+        unhealthy_threshold = 10
+        timeout             = 5
+        protocol            = "HTTP"
+        matcher             = "200"
+      }
       conditions = [{
         host_headers = ["admin.myfojo.com"]
       }]
