@@ -260,7 +260,7 @@ module "alb" {
       }]
 
       conditions = [{
-        host_headers = ["ashwani.com"]
+        host_headers = ["myfojo.com"]
       }]
     },
     {
@@ -272,7 +272,7 @@ module "alb" {
       }]
 
       conditions = [{
-        host_headers = ["atul.com"]
+        host_headers = ["admin.myfojo.com"]
       }]
     },
     {
