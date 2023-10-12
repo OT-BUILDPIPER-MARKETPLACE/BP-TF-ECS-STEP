@@ -242,17 +242,31 @@ module "alb" {
   subnets         = local.alb_subnets
   security_groups = [module.alb_sg.security_group_id]
 
-  http_tcp_listeners = [
+  https_listeners = [
     {
-      port               = 80
-      protocol           = "HTTP"
-      target_group_index = 0
-    },
+      port               = 443
+      protocol           = "HTTPS"
+      certificate_arn    = var.acm_certificate_arn
+      target_group_index = 1
+    }
   ]
 
-  http_tcp_listener_rules = [
+  http_tcp_listeners = [
     {
-      http_tcp_listener_index = 0
+      port        = 80
+      protocol    = "HTTP"
+      action_type = "redirect"
+      redirect = {
+        port        = "443"
+        protocol    = "HTTPS"
+        status_code = "HTTP_301"
+      }
+    }
+  ]
+
+  https_listener_rules = [
+    {
+      https_listener_index    = 0
       priority                = 1
       actions = [{
         type         = "forward"
@@ -260,11 +274,11 @@ module "alb" {
       }]
 
       conditions = [{
-        host_headers = ["myfojo.com"]
+        host_headers = [var.backend_domain]
       }]
     },
     {
-      http_tcp_listener_index = 0
+      https_listener_index    = 0
       priority                = 2
       actions = [{
         type         = "forward"
@@ -282,11 +296,11 @@ module "alb" {
         matcher             = "200"
       }
       conditions = [{
-        host_headers = ["admin.myfojo.com"]
+        host_headers = [var.webapp_domain]
       }]
     },
     {
-      http_tcp_listener_index = 0
+      https_listener_index    = 0
       priority                = 3
       actions = [{
         type         = "forward"
@@ -294,11 +308,11 @@ module "alb" {
       }]
 
       conditions = [{
-        host_headers = ["admin.myfojo.com"]
+        host_headers = [var.admin_domain]
       }]
     },
     {
-      http_tcp_listener_index = 0
+      https_listener_index    = 0
       priority                = 4
       actions = [{
         type         = "forward"
@@ -306,7 +320,7 @@ module "alb" {
       }]
 
       conditions = [{
-        host_headers = ["recipe.myfojo.com"]
+        host_headers = [var.recipe_domain]
       }]
     }
   ]
@@ -337,5 +351,4 @@ module "alb" {
       target_type      = "ip"
     }
   ]
-
 }

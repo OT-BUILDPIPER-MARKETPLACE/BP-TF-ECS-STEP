@@ -348,3 +348,28 @@ variable "admin_autoscaling_policies" {
     }
   }
 }
+
+variable "acm_certificate_arn" {
+  type    = string
+  default = ""
+}
+
+variable "webapp_domain" {
+  type    = string
+  default = ""
+}
+
+variable "backend_domain" {
+  type    = string
+  default = ""
+}
+
+variable "recipe_domain" {
+  type    = string
+  default = ""
+}
+
+variable "admin_domain" {
+  type    = string
+  default = ""
+}
