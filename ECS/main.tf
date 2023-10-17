@@ -284,17 +284,6 @@ module "alb" {
         type         = "forward"
         target_group_index = 1
       }]
-      health_check = {
-        enabled             = true
-        interval            = 60
-        path                = "/"
-        port                = "traffic-port"
-        healthy_threshold   = 2
-        unhealthy_threshold = 10
-        timeout             = 5
-        protocol            = "HTTP"
-        matcher             = "200"
-      }
       conditions = [{
         host_headers = [var.webapp_domain]
       }]
@@ -306,17 +295,7 @@ module "alb" {
         type         = "forward"
         target_group_index = 2
       }]
-      health_check = {
-        enabled             = true
-        interval            = 60
-        path                = "/"
-        port                = "traffic-port"
-        healthy_threshold   = 2
-        unhealthy_threshold = 5
-        timeout             = 45
-        protocol            = "HTTP"
-        matcher             = "200"
-      }
+
 
       conditions = [{
         host_headers = [var.admin_domain]
@@ -329,17 +308,7 @@ module "alb" {
         type         = "forward"
         target_group_index = 3
       }]
-      health_check = {
-        enabled             = true
-        interval            = 30
-        path                = "/admin/login/?next=/admin/"
-        port                = "traffic-port"
-        healthy_threshold   = 2
-        unhealthy_threshold = 5
-        timeout             = 25
-        protocol            = "HTTP"
-        matcher             = "200"
-      }
+
       conditions = [{
         host_headers = [var.recipe_domain]
       }]
@@ -352,24 +321,59 @@ module "alb" {
       backend_protocol = "HTTP"
       backend_port     = var.backend_port
       target_type      = "ip"
+                                                                                                                                                                                                  
     },
     {
       name             = "${var.env}-${var.cluster_name}-webapp-service"
       backend_protocol = "HTTP"
       backend_port     = var.webapp_port
       target_type      = "ip"
+            health_check = {
+        enabled             = true
+        interval            = 60
+        path                = "/"
+        port                = "traffic-port"
+        healthy_threshold   = 2
+        unhealthy_threshold = 10
+        timeout             = 5
+        protocol            = "HTTP"
+        matcher             = "200"
+      }
     },
     {
       name             = "${var.env}-${var.cluster_name}-admin-service"
       backend_protocol = "HTTP"
       backend_port     = var.admin_port
       target_type      = "ip"
+            health_check = {
+        enabled             = true
+        interval            = 60
+        path                = "/"
+        port                = "traffic-port"
+        healthy_threshold   = 2
+        unhealthy_threshold = 5
+        timeout             = 45
+        protocol            = "HTTP"
+        matcher             = "200"
+      }
     },
     {
       name             = "${var.env}-${var.cluster_name}-foomill-service"
       backend_protocol = "HTTP"
       backend_port     = var.foomill_port
       target_type      = "ip"
+            health_check = {
+        enabled             = true
+        interval            = 30
+        path                = "/admin/login/?next=/admin/"
+        port                = "traffic-port"
+        healthy_threshold   = 2
+        unhealthy_threshold = 5
+        timeout             = 25
+        protocol            = "HTTP"
+        matcher             = "200"
+      }
+
     }
   ]
 }
