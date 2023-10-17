@@ -306,6 +306,17 @@ module "alb" {
         type         = "forward"
         target_group_index = 2
       }]
+      health_check = {
+        enabled             = true
+        interval            = 60
+        path                = "/"
+        port                = "traffic-port"
+        healthy_threshold   = 2
+        unhealthy_threshold = 5
+        timeout             = 45
+        protocol            = "HTTP"
+        matcher             = "200"
+      }
 
       conditions = [{
         host_headers = [var.admin_domain]
@@ -318,7 +329,17 @@ module "alb" {
         type         = "forward"
         target_group_index = 3
       }]
-
+      health_check = {
+        enabled             = true
+        interval            = 30
+        path                = "/admin/login/?next=/admin/"
+        port                = "traffic-port"
+        healthy_threshold   = 2
+        unhealthy_threshold = 5
+        timeout             = 25
+        protocol            = "HTTP"
+        matcher             = "200"
+      }
       conditions = [{
         host_headers = [var.recipe_domain]
       }]
