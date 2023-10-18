@@ -59,6 +59,9 @@ module "ecs" {
           cidr_blocks = ["0.0.0.0/0"]
         }
       }
+            tags = {
+      Name = "${var.env}-${var.cluster_name}-backend-service"
+      }
     },
     "${var.env}-${var.cluster_name}-webapp-service" = {
       cpu    = var.webapp_cpu
@@ -107,6 +110,9 @@ module "ecs" {
           protocol    = "-1"
           cidr_blocks = ["0.0.0.0/0"]
         }
+      }
+      tags = {
+      Name = "${var.env}-${var.cluster_name}-webapp-service"
       }
     },
     "${var.env}-${var.cluster_name}-admin-service" = {
@@ -157,6 +163,9 @@ module "ecs" {
           cidr_blocks = ["0.0.0.0/0"]
         }
       }
+            tags = {
+      Name = "${var.env}-${var.cluster_name}-admin-service"
+      }
     },
     "${var.env}-${var.cluster_name}-foomill-service" = {
       cpu    = var.foomill_cpu
@@ -205,6 +214,9 @@ module "ecs" {
           protocol    = "-1"
           cidr_blocks = ["0.0.0.0/0"]
         }
+      }
+               tags = {
+      Name = "${var.env}-${var.cluster_name}-foomill-service"
       }
     }
   }
