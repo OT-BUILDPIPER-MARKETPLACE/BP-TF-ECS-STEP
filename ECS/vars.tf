@@ -28,13 +28,26 @@ variable "fargate_capacity_providers" {
   description = "Map of Fargate capacity provider definitions to use for the cluster"
   type        = any
   default     = {
-    FARGATE = {
+    FARGATE_SPOT = {
       default_capacity_provider_strategy = {
         weight = 100
+        capacity_provider = "FARGATE_SPOT"
       }
     }
   }
 } 
+
+variable "capacity_provider_strategy" {
+  description = "Capacity provider strategies to use for the service. Can be one or more"
+  type        = any
+  default     = {
+    FARGATE_SPOT = {
+        weight = 100
+        capacity_provider = "FARGATE_SPOT"
+      }
+    }
+  }
+
 
 variable "services_subnet_ids" {
   type    = list
@@ -79,13 +92,13 @@ variable "backend_image" {
 variable "backend_desired_count" {
   description = "Number of instances of the task definition to place and keep running. Defaults to `0`"
   type        = number
-  default     = 2
+  default     = 1
 }
 
 variable "backend_autoscaling_min_capacity" {
   description = "Minimum number of tasks to run in your service"
   type        = number
-  default     = 2
+  default     = 1
 }
 
 variable "backend_autoscaling_max_capacity" {
@@ -154,13 +167,13 @@ variable "webapp_image" {
 variable "webapp_desired_count" {
   description = "Number of instances of the task definition to place and keep running. Defaults to `0`"
   type        = number
-  default     = 2
+  default     = 1
 }
 
 variable "webapp_autoscaling_min_capacity" {
   description = "Minimum number of tasks to run in your service"
   type        = number
-  default     = 2
+  default     = 1
 }
 
 variable "webapp_autoscaling_max_capacity" {
@@ -230,13 +243,13 @@ variable "foomill_image" {
 variable "foomill_desired_count" {
   description = "Number of instances of the task definition to place and keep running. Defaults to `0`"
   type        = number
-  default     = 2
+  default     = 1
 }
 
 variable "foomill_autoscaling_min_capacity" {
   description = "Minimum number of tasks to run in your service"
   type        = number
-  default     = 2
+  default     = 1
 }
 
 variable "foomill_autoscaling_max_capacity" {
@@ -307,13 +320,13 @@ variable "admin_image" {
 variable "admin_desired_count" {
   description = "Number of instances of the task definition to place and keep running. Defaults to `0`"
   type        = number
-  default     = 2
+  default     = 1
 }
 
 variable "admin_autoscaling_min_capacity" {
   description = "Minimum number of tasks to run in your service"
   type        = number
-  default     = 2
+  default     = 1
 }
 
 variable "admin_autoscaling_max_capacity" {
