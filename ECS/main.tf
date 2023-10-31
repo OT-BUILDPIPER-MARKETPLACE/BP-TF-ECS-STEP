@@ -17,6 +17,7 @@ module "ecs" {
 			desired_count             = var.backend_desired_count
 			autoscaling_min_capacity  = var.backend_autoscaling_min_capacity
 			autoscaling_max_capacity  = var.backend_autoscaling_max_capacity
+      capacity_provider_strategy = var.capacity_provider_strategy
       autoscaling_policies      = var.backend_autoscaling_policies
       container_definitions = {
         "${var.env}-${var.cluster_name}-backend" = {
@@ -69,6 +70,7 @@ module "ecs" {
 			desired_count             = var.webapp_desired_count
 			autoscaling_min_capacity  = var.webapp_autoscaling_min_capacity
 			autoscaling_max_capacity  = var.webapp_autoscaling_max_capacity
+      capacity_provider_strategy = var.capacity_provider_strategy
       autoscaling_policies      = var.webapp_autoscaling_policies
       container_definitions = {
         "${var.env}-${var.cluster_name}-webapp" = {
@@ -121,6 +123,7 @@ module "ecs" {
 			desired_count             = var.admin_desired_count
 			autoscaling_min_capacity  = var.admin_autoscaling_min_capacity
 			autoscaling_max_capacity  = var.admin_autoscaling_max_capacity
+      capacity_provider_strategy = var.capacity_provider_strategy
       autoscaling_policies      = var.admin_autoscaling_policies
       container_definitions = {
         "${var.env}-${var.cluster_name}-admin" = {
@@ -173,6 +176,7 @@ module "ecs" {
 			desired_count             = var.foomill_desired_count
 			autoscaling_min_capacity  = var.foomill_autoscaling_min_capacity
 			autoscaling_max_capacity  = var.foomill_autoscaling_max_capacity
+      capacity_provider_strategy = var.capacity_provider_strategy
       autoscaling_policies      = var.foomill_autoscaling_policies
       container_definitions = {
         "${var.env}-${var.cluster_name}-foomill" = {
