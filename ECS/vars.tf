@@ -28,10 +28,10 @@ variable "fargate_capacity_providers" {
   description = "Map of Fargate capacity provider definitions to use for the cluster"
   type        = any
   default     = {
-    FARGATE_SPOT = {
+    FARGATE = {
       default_capacity_provider_strategy = {
         weight = 100
-        capacity_provider = "FARGATE_SPOT"
+        capacity_provider = "FARGATE"
       }
     }
   }
@@ -40,12 +40,7 @@ variable "fargate_capacity_providers" {
 variable "capacity_provider_strategy" {
   description = "Capacity provider strategies to use for the service. Can be one or more"
   type        = any
-  default     = {
-    FARGATE_SPOT = {
-        weight = 100
-        capacity_provider = "FARGATE_SPOT"
-      }
-    }
+  default     = {}
   }
 
 
@@ -118,7 +113,7 @@ variable "backend_autoscaling_policies" {
         predefined_metric_specification = {
           predefined_metric_type = "ECSServiceAverageCPUUtilization"
         }
-        target_value           = 50
+        target_value           = 70
       }
     }
     memory = {
@@ -128,7 +123,7 @@ variable "backend_autoscaling_policies" {
         predefined_metric_specification = {
           predefined_metric_type = "ECSServiceAverageMemoryUtilization"
         }
-        target_value           = 50
+        target_value           = 70
       }
     }
   }
@@ -193,7 +188,7 @@ variable "webapp_autoscaling_policies" {
         predefined_metric_specification = {
           predefined_metric_type = "ECSServiceAverageCPUUtilization"
         }
-        target_value           = 50
+        target_value           = 70
       }
     }
     memory = {
@@ -203,7 +198,7 @@ variable "webapp_autoscaling_policies" {
         predefined_metric_specification = {
           predefined_metric_type = "ECSServiceAverageMemoryUtilization"
         }
-        target_value           = 50
+        target_value           = 70
       }
     }
   }
@@ -269,7 +264,7 @@ variable "foomill_autoscaling_policies" {
         predefined_metric_specification = {
           predefined_metric_type = "ECSServiceAverageCPUUtilization"
         }
-        target_value           = 50
+        target_value           = 70
       }
     }
     memory = {
@@ -279,7 +274,7 @@ variable "foomill_autoscaling_policies" {
         predefined_metric_specification = {
           predefined_metric_type = "ECSServiceAverageMemoryUtilization"
         }
-        target_value           = 50
+        target_value           = 70
       }
     }
   }
@@ -346,7 +341,7 @@ variable "admin_autoscaling_policies" {
         predefined_metric_specification = {
           predefined_metric_type = "ECSServiceAverageCPUUtilization"
         }
-        target_value           = 50
+        target_value           = 70
       }
     }
     memory = {
@@ -356,7 +351,7 @@ variable "admin_autoscaling_policies" {
         predefined_metric_specification = {
           predefined_metric_type = "ECSServiceAverageMemoryUtilization"
         }
-        target_value           = 50
+        target_value           = 70
       }
     }
   }
