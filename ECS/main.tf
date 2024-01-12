@@ -385,7 +385,7 @@ module "alb" {
         port                = "traffic-port"
         healthy_threshold   = 2
         unhealthy_threshold = 5
-        timeout             = 25
+        timeout             = 15
         protocol            = "HTTP"
         matcher             = "200"
       }
